@@ -1,0 +1,161 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  #app {
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    font-family: var(--font-sans);
+  }
+  .screen { display: none; flex-direction: column; align-items: center; gap: 1.5rem; width: 100%; }
+  .screen.active { display: flex; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .emoji-big { font-size: 56px; line-height: 1; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); line-height: 1.4; }
+  p { font-size: 15px; color: var(--color-text-secondary); max-width: 360px; }
+  .btn-row { display: flex; gap: 12px; justify-content: center; margin-top: 1rem; position: relative; height: 50px; width: 340px; }
+  .btn-yes {
+    padding: 12px 32px;
+    font-size: 16px;
+    font-weight: 500;
+    background: var(--color-background-primary);
+    border: 1.5px solid var(--color-border-primary);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    color: var(--color-text-primary);
+    transition: background 0.15s;
+    position: absolute;
+    left: 0;
+  }
+  .btn-yes:hover { background: var(--color-background-secondary); }
+  .btn-no {
+    padding: 12px 32px;
+    font-size: 16px;
+    font-weight: 500;
+    background: var(--color-background-primary);
+    border: 1.5px solid var(--color-border-primary);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    position: fixed;
+    white-space: nowrap;
+    user-select: none;
+    transition: font-size 0.1s;
+  }
+  .dm-btn {
+    padding: 14px 36px;
+    font-size: 17px;
+    font-weight: 500;
+    background: linear-gradient(135deg, #833AB4, #E1306C, #FCAF45);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.15s;
+  }
+  .dm-btn:hover { opacity: 0.88; }
+  .tiny { font-size: 12px; color: var(--color-text-secondary); margin-top: 0.5rem; }
+  #confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; }
+</style>
+
+<div id="app">
+  <div id="confetti-container"></div>
+
+  <div id="s1" class="screen active">
+    <div class="emoji-big">🤫</div>
+    <h2>Someone has something to tell you.</h2>
+    <p>But first... a very important question needs to be answered.</p>
+    <div class="btn-row">
+      <button class="btn-yes" onclick="go('s2')">👀 Okay, what is it?</button>
+      <button class="btn-no" id="no1" onmouseenter="runNo('no1')" ontouchstart="runNo('no1')">🚪 I'm leaving</button>
+    </div>
+  </div>
+
+  <div id="s2" class="screen">
+    <div class="emoji-big">🤔</div>
+    <h2>Will you start the conversation?</h2>
+    <p>A simple yes or no. Easy. You got this. Or do you?</p>
+    <div class="btn-row">
+      <button class="btn-yes" onclick="go('s3')">✅ Yes I will</button>
+      <button class="btn-no" id="no2" onmouseenter="runNo('no2')" ontouchstart="runNo('no2')">🚫 No way</button>
+    </div>
+  </div>
+
+  <div id="s3" class="screen">
+    <div class="emoji-big">🧐</div>
+    <h2>Are you absolutely, 100% sure?</h2>
+    <p>Studies show 99% of failed conversations happen because someone said no. Science.</p>
+    <div class="btn-row">
+      <button class="btn-yes" onclick="go('s4')">💪 I'm sure</button>
+      <button class="btn-no" id="no3" onmouseenter="runNo('no3')" ontouchstart="runNo('no3')">😰 Hmm maybe not</button>
+    </div>
+  </div>
+
+  <div id="s4" class="screen">
+    <div class="emoji-big">🚨</div>
+    <h2>FINAL WARNING.</h2>
+    <p>By clicking yes, you are legally and emotionally obligated to say hi. Terms & conditions apply.</p>
+    <div class="btn-row">
+      <button class="btn-yes" onclick="go('win')">🫡 Deal. Let's go.</button>
+      <button class="btn-no" id="no4" onmouseenter="runNo('no4')" ontouchstart="runNo('no4')">⚖️ I want a lawyer</button>
+    </div>
+  </div>
+
+  <div id="win" class="screen">
+    <div class="emoji-big">🎉</div>
+    <h2>That's what I thought 😏</h2>
+    <p style="font-size:16px;">Now it's your turn. The person waiting? That's me.<br><br>Say hey. I don't bite 😄</p>
+    <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); padding: 1rem 1.5rem; margin-top: 0.5rem; max-width: 320px;">
+      <p style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px;">Suggested opener (you're welcome) ✨</p>
+      <p style="font-size: 16px; color: var(--color-text-primary); font-weight: 500;">"Hey 👋 how you doing?"</p>
+    </div>
+    <a class="dm-btn" href="https://ig.me/m/joh_n.a" target="_blank">
+      <i class="ti ti-brand-instagram" style="font-size:18px; vertical-align:-3px; margin-right:8px;" aria-hidden="true"></i>
+      Send me a DM 💬
+    </a>
+    <p class="tiny">Go on then 👑 tap it</p>
+</div>
+</div>
+
+<script>
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'win') launchConfetti();
+}
+
+function runNo(btnId) {
+  const btn = document.getElementById(btnId);
+  const W = window.innerWidth, H = window.innerHeight;
+  const bw = btn.offsetWidth || 120, bh = btn.offsetHeight || 44;
+  const newX = Math.random() * (W - bw - 20) + 10;
+  const newY = Math.random() * (H - bh - 20) + 10;
+  btn.style.left = newX + 'px';
+  btn.style.top = newY + 'px';
+  btn.style.right = 'auto';
+  btn.style.bottom = 'auto';
+  const cur = parseFloat(btn.style.fontSize) || 16;
+  btn.style.fontSize = Math.max(9, cur - 1.5) + 'px';
+}
+
+function launchConfetti() {
+  const container = document.getElementById('confetti-container');
+  const colors = ['#E1306C','#833AB4','#405DE6','#FD1D1D','#FCAF45','#58C7E8'];
+  const style = document.createElement('style');
+  style.textContent = `@keyframes fall { to { transform: translateY(700px) rotate(720deg); opacity: 0; } }`;
+  document.head.appendChild(style);
+  for (let i = 0; i < 70; i++) {
+    const el = document.createElement('div');
+    el.style.cssText = `position:absolute;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;background:${colors[Math.floor(Math.random()*colors.length)]};left:${Math.random()*100}%;top:-10px;border-radius:${Math.random()>.5?'50%':'2px'};animation:fall ${1.5+Math.random()*2}s ease-in forwards;animation-delay:${Math.random()*0.8}s;`;
+    container.appendChild(el);
+  }
+}
+</script>
