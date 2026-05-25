@@ -5,162 +5,293 @@
 #app {
   min-height: 100vh;
   min-height: 100dvh;
-  background: #1a1008;
+  background: #0d0d0d;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(1.5rem, 6vw, 3rem) clamp(1rem, 5vw, 2rem);
+  padding: clamp(1.5rem, 6vw, 2.5rem) clamp(1.2rem, 6vw, 2rem);
   position: relative;
   overflow: hidden;
   font-family: var(--font-sans);
 }
 
-.stars span {
+.bg-circle {
   position: absolute;
   border-radius: 50%;
-  background: #f5d78e;
-  opacity: 0;
-  animation: twinkle 3s infinite;
+  pointer-events: none;
 }
-@keyframes twinkle { 0%,100%{opacity:0} 50%{opacity:0.7} }
 
-.vinyl {
-  width: clamp(90px, 28vw, 130px);
-  height: clamp(90px, 28vw, 130px);
-  border-radius: 50%;
-  background: #111;
-  border: 3px solid #3a2a10;
+.card {
+  background: #161616;
+  border: 0.5px solid #2a2a2a;
+  border-radius: 24px;
+  padding: clamp(1.8rem, 7vw, 2.5rem) clamp(1.5rem, 6vw, 2.2rem);
+  width: 100%;
+  max-width: 380px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: clamp(0.9rem, 3vw, 1.1rem);
   position: relative;
-  animation: spin 8s linear infinite;
-  margin-bottom: clamp(1rem, 4vw, 1.75rem);
-  flex-shrink: 0;
+  z-index: 2;
 }
-@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 
-.vinyl-inner {
-  width: clamp(24px, 7vw, 34px);
-  height: clamp(24px, 7vw, 34px);
+.step { display: none; flex-direction: column; align-items: center; gap: clamp(0.8rem, 3vw, 1rem); width: 100%; }
+.step.active { display: flex; animation: rise 0.45s cubic-bezier(0.34,1.4,0.64,1); }
+@keyframes rise { from { opacity:0; transform:translateY(18px) scale(0.96); } to { opacity:1; transform:translateY(0) scale(1); } }
+
+.icon-wrap {
+  width: clamp(56px, 15vw, 68px);
+  height: clamp(56px, 15vw, 68px);
   border-radius: 50%;
-  background: #f5d78e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
-}
-.vinyl-inner::after {
-  content: '';
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: #1a1008;
+  background: #1f1f1f;
+  border: 0.5px solid #2e2e2e;
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(24px, 7vw, 30px);
 }
 
-.groove { position: absolute; border-radius: 50%; border: 0.5px solid #2a1f0a; }
-
-.label-top {
-  font-size: clamp(10px, 2.5vw, 13px);
-  letter-spacing: 3px;
-  color: #f5d78e;
-  text-transform: uppercase;
-  margin-bottom: clamp(0.4rem, 2vw, 0.6rem);
-  opacity: 0.7;
-  text-align: center;
-}
-
-.message {
-  font-size: clamp(18px, 5.5vw, 24px);
+.q {
+  font-size: clamp(17px, 4.8vw, 20px);
   font-weight: 500;
-  color: #f5d78e;
+  color: #f0f0f0;
   text-align: center;
-  line-height: 1.5;
-  max-width: min(320px, 88vw);
-  margin-bottom: clamp(0.4rem, 2vw, 0.6rem);
+  line-height: 1.45;
+  max-width: 280px;
 }
 
-.sub {
-  font-size: clamp(13px, 3.5vw, 15px);
-  color: #9a7a3a;
+.hint {
+  font-size: clamp(12px, 3.2vw, 13px);
+  color: #555;
   text-align: center;
-  max-width: min(280px, 85vw);
-  line-height: 1.75;
-  margin-bottom: clamp(1.5rem, 5vw, 2.25rem);
+  line-height: 1.6;
+  max-width: 260px;
 }
 
-.cta {
+.btn-group {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 0.4rem;
+}
+
+.btn-yes {
+  flex: 1;
+  padding: clamp(12px, 3.5vw, 14px) 0;
+  background: #f0f0f0;
+  color: #0d0d0d;
+  border: none;
+  border-radius: 50px;
+  font-size: clamp(14px, 3.8vw, 15px);
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: opacity 0.15s, transform 0.1s;
+}
+.btn-yes:hover { opacity: 0.88; }
+.btn-yes:active { transform: scale(0.97); }
+
+.btn-no {
+  flex: 1;
+  padding: clamp(12px, 3.5vw, 14px) 0;
+  background: transparent;
+  color: #555;
+  border: 0.5px solid #2e2e2e;
+  border-radius: 50px;
+  font-size: clamp(14px, 3.8vw, 15px);
+  font-weight: 400;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: all 0.15s;
+  position: absolute;
+}
+.btn-no:active { transform: scale(0.97); }
+
+.progress {
+  display: flex;
+  gap: 6px;
+  margin-top: 0.2rem;
+}
+.pdot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #2a2a2a;
+  transition: background 0.3s;
+}
+.pdot.on { background: #f0f0f0; }
+
+.win-icon {
+  font-size: clamp(44px, 13vw, 56px);
+}
+.win-title {
+  font-size: clamp(20px, 5.5vw, 24px);
+  font-weight: 500;
+  color: #f0f0f0;
+  text-align: center;
+  line-height: 1.4;
+}
+.win-sub {
+  font-size: clamp(13px, 3.5vw, 14px);
+  color: #555;
+  text-align: center;
+  line-height: 1.7;
+  max-width: 260px;
+}
+.win-msg {
+  background: #1f1f1f;
+  border: 0.5px solid #2e2e2e;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: clamp(14px, 3.8vw, 15px);
+  color: #c8c8c8;
+  text-align: center;
+  line-height: 1.6;
+  width: 100%;
+  font-style: italic;
+}
+.ig-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: clamp(12px, 3.5vw, 14px) clamp(22px, 7vw, 32px);
-  background: #f5d78e;
-  color: #1a1008;
+  width: 100%;
+  justify-content: center;
+  padding: clamp(13px, 4vw, 15px) 0;
+  background: #f0f0f0;
+  color: #0d0d0d;
   border: none;
-  border-radius: 40px;
-  font-size: clamp(14px, 3.8vw, 16px);
+  border-radius: 50px;
+  font-size: clamp(14px, 3.8vw, 15px);
   font-weight: 500;
   cursor: pointer;
   text-decoration: none;
   font-family: var(--font-sans);
-  transition: opacity 0.15s;
-  white-space: nowrap;
+  transition: opacity 0.15s, transform 0.1s;
+  margin-top: 0.3rem;
 }
-.cta:hover { opacity: 0.88; }
-.cta:active { opacity: 0.75; transform: scale(0.97); }
-.cta i { font-size: clamp(16px, 4vw, 18px); }
+.ig-btn:hover { opacity: 0.88; }
+.ig-btn:active { transform: scale(0.97); }
 
 .note {
   position: absolute;
+  color: #ffffff18;
   font-size: clamp(16px, 5vw, 22px);
-  color: #f5d78e;
-  opacity: 0;
-  animation: floatNote 4s ease-in infinite;
   pointer-events: none;
   user-select: none;
+  animation: floatUp 5s ease-in infinite;
 }
-@keyframes floatNote {
-  0%   { opacity: 0; transform: translateY(0) rotate(-10deg); }
-  20%  { opacity: 0.5; }
-  80%  { opacity: 0.3; }
-  100% { opacity: 0; transform: translateY(-80px) rotate(15deg); }
+@keyframes floatUp {
+  0%   { opacity:0; transform:translateY(0); }
+  15%  { opacity:1; }
+  85%  { opacity:0.4; }
+  100% { opacity:0; transform:translateY(-100px); }
 }
 </style>
 
 <div id="app">
-  <div class="stars" id="stars"></div>
+  <div class="bg-circle" style="width:300px;height:300px;background:#ffffff04;top:-80px;right:-80px;"></div>
+  <div class="bg-circle" style="width:200px;height:200px;background:#ffffff03;bottom:-40px;left:-60px;"></div>
 
-  <div class="note" style="left:8%;bottom:28%;animation-delay:0s">♪</div>
-  <div class="note" style="left:74%;bottom:22%;animation-delay:1.2s">♫</div>
-  <div class="note" style="left:52%;bottom:38%;animation-delay:2.4s">♩</div>
-  <div class="note" style="left:22%;bottom:18%;animation-delay:0.8s">♬</div>
-  <div class="note" style="left:82%;bottom:48%;animation-delay:3s">♪</div>
+  <div class="note" style="left:6%;bottom:15%;animation-delay:0s">♪</div>
+  <div class="note" style="left:80%;bottom:20%;animation-delay:1.5s">♫</div>
+  <div class="note" style="left:60%;bottom:60%;animation-delay:3s">♩</div>
+  <div class="note" style="left:18%;bottom:55%;animation-delay:2s">♬</div>
 
-  <div class="vinyl">
-    <div class="groove" style="width:88%;height:88%"></div>
-    <div class="groove" style="width:68%;height:68%"></div>
-    <div class="groove" style="width:52%;height:52%"></div>
-    <div class="groove" style="width:38%;height:38%"></div>
-    <div class="vinyl-inner"></div>
+  <div class="card">
+
+    <div id="s1" class="step active">
+      <div class="icon-wrap">🤫</div>
+      <p class="q">Someone left something here for you, Samri.</p>
+      <p class="hint">Tap below to find out what it is.</p>
+      <div class="btn-group" style="position:relative;height:48px;">
+        <button class="btn-yes" onclick="next(2)" style="position:absolute;left:0;width:48%;">Open it</button>
+        <button class="btn-no" id="n1" style="width:48%;right:0;" onmouseenter="flee('n1')" ontouchstart="flee('n1')">Nah</button>
+      </div>
+      <div class="progress"><div class="pdot on"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div>
+    </div>
+
+    <div id="s2" class="step">
+      <div class="icon-wrap">🎷</div>
+      <p class="q">It's a message. Want to read it?</p>
+      <p class="hint">It's short. And kinda smooth. Like jazz.</p>
+      <div class="btn-group" style="position:relative;height:48px;">
+        <button class="btn-yes" onclick="next(3)" style="position:absolute;left:0;width:48%;">Yes please</button>
+        <button class="btn-no" id="n2" style="width:48%;right:0;" onmouseenter="flee('n2')" ontouchstart="flee('n2')">Maybe not</button>
+      </div>
+      <div class="progress"><div class="pdot on"></div><div class="pdot on"></div><div class="pdot"></div><div class="pdot"></div></div>
+    </div>
+
+    <div id="s3" class="step">
+      <div class="icon-wrap">🌙</div>
+      <p class="q">You sure? Once you read it, you can't unread it.</p>
+      <p class="hint">Just saying. No pressure. (A little pressure.)</p>
+      <div class="btn-group" style="position:relative;height:48px;">
+        <button class="btn-yes" onclick="next(4)" style="position:absolute;left:0;width:48%;">I'm sure</button>
+        <button class="btn-no" id="n3" style="width:48%;right:0;" onmouseenter="flee('n3')" ontouchstart="flee('n3')">Hmm...</button>
+      </div>
+      <div class="progress"><div class="pdot on"></div><div class="pdot on"></div><div class="pdot on"></div><div class="pdot"></div></div>
+    </div>
+
+    <div id="s4" class="step">
+      <div class="icon-wrap">✍️</div>
+      <p class="q">Last chance to turn back.</p>
+      <p class="hint">The No button is tired. Let it rest.</p>
+      <div class="btn-group" style="position:relative;height:48px;">
+        <button class="btn-yes" onclick="next('win')" style="position:absolute;left:0;width:48%;">Show me</button>
+        <button class="btn-no" id="n4" style="width:48%;right:0;" onmouseenter="flee('n4')" ontouchstart="flee('n4')">No</button>
+      </div>
+      <div class="progress"><div class="pdot on"></div><div class="pdot on"></div><div class="pdot on"></div><div class="pdot on"></div></div>
+    </div>
+
+    <div id="swin" class="step">
+      <div class="win-icon">🎶</div>
+      <p class="win-title">Here it is.</p>
+      <div class="win-msg">"Hey Samri, how you doing? 😊"</div>
+      <p class="win-sub">That's it. That's the whole message.<br>Now you gotta reply.</p>
+      <a class="ig-btn" href="https://ig.me/m/joh_n.a" target="_blank">
+        <i class="ti ti-brand-instagram" style="font-size:17px;" aria-hidden="true"></i>
+        Reply to joh_n.a
+      </a>
+    </div>
+
   </div>
-
-  <p class="label-top">a note for you</p>
-  <p class="message">Hey Samri,<br>how you doing? 😊</p>
-  <p class="sub">Someone's been thinking about you.<br>Slide back when you're ready.</p>
-
-  <a class="cta" href="https://ig.me/m/joh_n.a" target="_blank">
-    <i class="ti ti-brand-instagram" aria-hidden="true"></i>
-    Reply on Instagram
-  </a>
 </div>
 
 <script>
-const starsEl = document.getElementById('stars');
-for (let i = 0; i < 35; i++) {
-  const s = document.createElement('span');
-  const size = 1 + Math.random() * 2.5;
-  s.style.cssText = `width:${size}px;height:${size}px;left:${(Math.random()*100).toFixed(1)}%;top:${(Math.random()*100).toFixed(1)}%;animation-delay:${(Math.random()*3).toFixed(1)}s;animation-duration:${(2+Math.random()*3).toFixed(1)}s`;
-  starsEl.appendChild(s);
+function next(id) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  const el = id === 'win' ? document.getElementById('swin') : document.getElementById('s' + id);
+  if (el) el.classList.add('active');
+}
+
+const noPos = {};
+
+function flee(id) {
+  const btn = document.getElementById(id);
+  const card = btn.closest('.card');
+  const cardRect = card.getBoundingClientRect();
+  const btnRect = btn.getBoundingClientRect();
+
+  const maxX = card.offsetWidth - btn.offsetWidth - 4;
+  const maxY = card.offsetHeight - btn.offsetHeight - 4;
+
+  let nx = Math.random() * maxX;
+  let ny = Math.random() * maxY;
+
+  const prev = noPos[id] || { x: cardRect.width / 2, y: cardRect.height / 2 };
+  if (Math.abs(nx - prev.x) < 40) nx = (nx + 80) % maxX;
+  if (Math.abs(ny - prev.y) < 30) ny = (ny + 60) % maxY;
+
+  noPos[id] = { x: nx, y: ny };
+
+  btn.style.position = 'absolute';
+  btn.style.left = nx + 'px';
+  btn.style.top = ny + 'px';
+  btn.style.right = 'auto';
+  btn.style.bottom = 'auto';
+  btn.style.transition = 'left 0.25s ease, top 0.25s ease, font-size 0.2s';
+
+  const cur = parseFloat(btn.style.fontSize) || 15;
+  btn.style.fontSize = Math.max(9, cur - 1) + 'px';
+  btn.style.opacity = Math.max(0.2, parseFloat(btn.style.opacity || 1) - 0.12);
 }
 </script>
