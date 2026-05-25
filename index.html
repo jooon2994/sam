@@ -1,161 +1,166 @@
 
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  #app {
-    min-height: 520px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    font-family: var(--font-sans);
-  }
-  .screen { display: none; flex-direction: column; align-items: center; gap: 1.5rem; width: 100%; }
-  .screen.active { display: flex; animation: fadeIn 0.3s ease; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  .emoji-big { font-size: 56px; line-height: 1; }
-  h2 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); line-height: 1.4; }
-  p { font-size: 15px; color: var(--color-text-secondary); max-width: 360px; }
-  .btn-row { display: flex; gap: 12px; justify-content: center; margin-top: 1rem; position: relative; height: 50px; width: 340px; }
-  .btn-yes {
-    padding: 12px 32px;
-    font-size: 16px;
-    font-weight: 500;
-    background: var(--color-background-primary);
-    border: 1.5px solid var(--color-border-primary);
-    border-radius: var(--border-radius-md);
-    cursor: pointer;
-    color: var(--color-text-primary);
-    transition: background 0.15s;
-    position: absolute;
-    left: 0;
-  }
-  .btn-yes:hover { background: var(--color-background-secondary); }
-  .btn-no {
-    padding: 12px 32px;
-    font-size: 16px;
-    font-weight: 500;
-    background: var(--color-background-primary);
-    border: 1.5px solid var(--color-border-primary);
-    border-radius: var(--border-radius-md);
-    cursor: pointer;
-    color: var(--color-text-secondary);
-    position: fixed;
-    white-space: nowrap;
-    user-select: none;
-    transition: font-size 0.1s;
-  }
-  .dm-btn {
-    padding: 14px 36px;
-    font-size: 17px;
-    font-weight: 500;
-    background: linear-gradient(135deg, #833AB4, #E1306C, #FCAF45);
-    color: white;
-    border: none;
-    border-radius: var(--border-radius-md);
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: opacity 0.15s;
-  }
-  .dm-btn:hover { opacity: 0.88; }
-  .tiny { font-size: 12px; color: var(--color-text-secondary); margin-top: 0.5rem; }
-  #confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+#app {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #1a1008;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 6vw, 3rem) clamp(1rem, 5vw, 2rem);
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+
+.stars span {
+  position: absolute;
+  border-radius: 50%;
+  background: #f5d78e;
+  opacity: 0;
+  animation: twinkle 3s infinite;
+}
+@keyframes twinkle { 0%,100%{opacity:0} 50%{opacity:0.7} }
+
+.vinyl {
+  width: clamp(90px, 28vw, 130px);
+  height: clamp(90px, 28vw, 130px);
+  border-radius: 50%;
+  background: #111;
+  border: 3px solid #3a2a10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: spin 8s linear infinite;
+  margin-bottom: clamp(1rem, 4vw, 1.75rem);
+  flex-shrink: 0;
+}
+@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+.vinyl-inner {
+  width: clamp(24px, 7vw, 34px);
+  height: clamp(24px, 7vw, 34px);
+  border-radius: 50%;
+  background: #f5d78e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+.vinyl-inner::after {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #1a1008;
+}
+
+.groove { position: absolute; border-radius: 50%; border: 0.5px solid #2a1f0a; }
+
+.label-top {
+  font-size: clamp(10px, 2.5vw, 13px);
+  letter-spacing: 3px;
+  color: #f5d78e;
+  text-transform: uppercase;
+  margin-bottom: clamp(0.4rem, 2vw, 0.6rem);
+  opacity: 0.7;
+  text-align: center;
+}
+
+.message {
+  font-size: clamp(18px, 5.5vw, 24px);
+  font-weight: 500;
+  color: #f5d78e;
+  text-align: center;
+  line-height: 1.5;
+  max-width: min(320px, 88vw);
+  margin-bottom: clamp(0.4rem, 2vw, 0.6rem);
+}
+
+.sub {
+  font-size: clamp(13px, 3.5vw, 15px);
+  color: #9a7a3a;
+  text-align: center;
+  max-width: min(280px, 85vw);
+  line-height: 1.75;
+  margin-bottom: clamp(1.5rem, 5vw, 2.25rem);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: clamp(12px, 3.5vw, 14px) clamp(22px, 7vw, 32px);
+  background: #f5d78e;
+  color: #1a1008;
+  border: none;
+  border-radius: 40px;
+  font-size: clamp(14px, 3.8vw, 16px);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.cta:hover { opacity: 0.88; }
+.cta:active { opacity: 0.75; transform: scale(0.97); }
+.cta i { font-size: clamp(16px, 4vw, 18px); }
+
+.note {
+  position: absolute;
+  font-size: clamp(16px, 5vw, 22px);
+  color: #f5d78e;
+  opacity: 0;
+  animation: floatNote 4s ease-in infinite;
+  pointer-events: none;
+  user-select: none;
+}
+@keyframes floatNote {
+  0%   { opacity: 0; transform: translateY(0) rotate(-10deg); }
+  20%  { opacity: 0.5; }
+  80%  { opacity: 0.3; }
+  100% { opacity: 0; transform: translateY(-80px) rotate(15deg); }
+}
 </style>
 
 <div id="app">
-  <div id="confetti-container"></div>
+  <div class="stars" id="stars"></div>
 
-  <div id="s1" class="screen active">
-    <div class="emoji-big">🤫</div>
-    <h2>Someone has something to tell you.</h2>
-    <p>But first... a very important question needs to be answered.</p>
-    <div class="btn-row">
-      <button class="btn-yes" onclick="go('s2')">👀 Okay, what is it?</button>
-      <button class="btn-no" id="no1" onmouseenter="runNo('no1')" ontouchstart="runNo('no1')">🚪 I'm leaving</button>
-    </div>
+  <div class="note" style="left:8%;bottom:28%;animation-delay:0s">♪</div>
+  <div class="note" style="left:74%;bottom:22%;animation-delay:1.2s">♫</div>
+  <div class="note" style="left:52%;bottom:38%;animation-delay:2.4s">♩</div>
+  <div class="note" style="left:22%;bottom:18%;animation-delay:0.8s">♬</div>
+  <div class="note" style="left:82%;bottom:48%;animation-delay:3s">♪</div>
+
+  <div class="vinyl">
+    <div class="groove" style="width:88%;height:88%"></div>
+    <div class="groove" style="width:68%;height:68%"></div>
+    <div class="groove" style="width:52%;height:52%"></div>
+    <div class="groove" style="width:38%;height:38%"></div>
+    <div class="vinyl-inner"></div>
   </div>
 
-  <div id="s2" class="screen">
-    <div class="emoji-big">🤔</div>
-    <h2>Will you start the conversation?</h2>
-    <p>A simple yes or no. Easy. You got this. Or do you?</p>
-    <div class="btn-row">
-      <button class="btn-yes" onclick="go('s3')">✅ Yes I will</button>
-      <button class="btn-no" id="no2" onmouseenter="runNo('no2')" ontouchstart="runNo('no2')">🚫 No way</button>
-    </div>
-  </div>
+  <p class="label-top">a note for you</p>
+  <p class="message">Hey Samri,<br>how you doing? 😊</p>
+  <p class="sub">Someone's been thinking about you.<br>Slide back when you're ready.</p>
 
-  <div id="s3" class="screen">
-    <div class="emoji-big">🧐</div>
-    <h2>Are you absolutely, 100% sure?</h2>
-    <p>Studies show 99% of failed conversations happen because someone said no. Science.</p>
-    <div class="btn-row">
-      <button class="btn-yes" onclick="go('s4')">💪 I'm sure</button>
-      <button class="btn-no" id="no3" onmouseenter="runNo('no3')" ontouchstart="runNo('no3')">😰 Hmm maybe not</button>
-    </div>
-  </div>
-
-  <div id="s4" class="screen">
-    <div class="emoji-big">🚨</div>
-    <h2>FINAL WARNING.</h2>
-    <p>By clicking yes, you are legally and emotionally obligated to say hi. Terms & conditions apply.</p>
-    <div class="btn-row">
-      <button class="btn-yes" onclick="go('win')">🫡 Deal. Let's go.</button>
-      <button class="btn-no" id="no4" onmouseenter="runNo('no4')" ontouchstart="runNo('no4')">⚖️ I want a lawyer</button>
-    </div>
-  </div>
-
-  <div id="win" class="screen">
-    <div class="emoji-big">🎉</div>
-    <h2>That's what I thought 😏</h2>
-    <p style="font-size:16px;">Now it's your turn. The person waiting? That's me.<br><br>Say hey. I don't bite 😄</p>
-    <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); padding: 1rem 1.5rem; margin-top: 0.5rem; max-width: 320px;">
-      <p style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px;">Suggested opener (you're welcome) ✨</p>
-      <p style="font-size: 16px; color: var(--color-text-primary); font-weight: 500;">"Hey 👋 how you doing?"</p>
-    </div>
-    <a class="dm-btn" href="https://ig.me/m/joh_n.a" target="_blank">
-      <i class="ti ti-brand-instagram" style="font-size:18px; vertical-align:-3px; margin-right:8px;" aria-hidden="true"></i>
-      Send me a DM 💬
-    </a>
-    <p class="tiny">Go on then 👑 tap it</p>
-</div>
+  <a class="cta" href="https://ig.me/m/joh_n.a" target="_blank">
+    <i class="ti ti-brand-instagram" aria-hidden="true"></i>
+    Reply on Instagram
+  </a>
 </div>
 
 <script>
-function go(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  if (id === 'win') launchConfetti();
-}
-
-function runNo(btnId) {
-  const btn = document.getElementById(btnId);
-  const W = window.innerWidth, H = window.innerHeight;
-  const bw = btn.offsetWidth || 120, bh = btn.offsetHeight || 44;
-  const newX = Math.random() * (W - bw - 20) + 10;
-  const newY = Math.random() * (H - bh - 20) + 10;
-  btn.style.left = newX + 'px';
-  btn.style.top = newY + 'px';
-  btn.style.right = 'auto';
-  btn.style.bottom = 'auto';
-  const cur = parseFloat(btn.style.fontSize) || 16;
-  btn.style.fontSize = Math.max(9, cur - 1.5) + 'px';
-}
-
-function launchConfetti() {
-  const container = document.getElementById('confetti-container');
-  const colors = ['#E1306C','#833AB4','#405DE6','#FD1D1D','#FCAF45','#58C7E8'];
-  const style = document.createElement('style');
-  style.textContent = `@keyframes fall { to { transform: translateY(700px) rotate(720deg); opacity: 0; } }`;
-  document.head.appendChild(style);
-  for (let i = 0; i < 70; i++) {
-    const el = document.createElement('div');
-    el.style.cssText = `position:absolute;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;background:${colors[Math.floor(Math.random()*colors.length)]};left:${Math.random()*100}%;top:-10px;border-radius:${Math.random()>.5?'50%':'2px'};animation:fall ${1.5+Math.random()*2}s ease-in forwards;animation-delay:${Math.random()*0.8}s;`;
-    container.appendChild(el);
-  }
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 35; i++) {
+  const s = document.createElement('span');
+  const size = 1 + Math.random() * 2.5;
+  s.style.cssText = `width:${size}px;height:${size}px;left:${(Math.random()*100).toFixed(1)}%;top:${(Math.random()*100).toFixed(1)}%;animation-delay:${(Math.random()*3).toFixed(1)}s;animation-duration:${(2+Math.random()*3).toFixed(1)}s`;
+  starsEl.appendChild(s);
 }
 </script>
